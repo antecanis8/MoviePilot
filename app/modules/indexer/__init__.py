@@ -188,6 +188,8 @@ class IndexerModule(_ModuleBase):
         # 返回结果
         if not result_array or len(result_array) == 0:
             logger.warn(f"{site.get('name')} 未搜索到数据，耗时 {seconds} 秒")
+            if web_response:
+            logger.warn(f"Web response: {web_response}")
             return []
         else:
             logger.info(f"{site.get('name')} 搜索完成，耗时 {seconds} 秒，返回数据：{len(result_array)}")
