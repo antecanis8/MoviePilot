@@ -230,7 +230,8 @@ class TorrentSpider:
             searchurl = self.domain + str(torrentspath).format(**inputs_dict)
 
         logger.info(f"开始请求：{searchurl}")
-
+        self.headers = self.search.get('headers', {})
+        logger.debug(f"headers:{self.headers}")
         if self.render:
             # 浏览器仿真
             page_source = PlaywrightHelper().get_page_source(
@@ -247,7 +248,8 @@ class TorrentSpider:
                 cookies=self.cookie,
                 timeout=self._timeout,
                 referer=self.referer,
-                proxies=self.proxies
+                proxies=self.proxies,
+                headers=self.headers
             ).get_res(searchurl, allow_redirects=True)
             page_source = RequestUtils.get_decoded_html_content(ret,
                                                                 settings.ENCODING_DETECTION_PERFORMANCE_MODE,
